@@ -1,0 +1,9 @@
+.ul-list {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+}
+
+.user-img {
+   height: 100px;
+}
