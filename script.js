@@ -1,20 +1,24 @@
 
-function getUsers () {
+let currentPage = 1;
+let totalPages;
+
+
+function getUsers (page) {
     let requist = new XMLHttpRequest ();
     requist.addEventListener('load', render);
     requist.addEventListener ('error', errorRender);
   
-    requist.open ('GET', 'https://reqres.in/api/users?page=2');
+    requist.open ('GET', 'https://reqres.in/api/users?page=' + page,);
     requist.send (); 
 }
 
 function render () {
     let response = this.responseText
     let responseData = JSON.parse(response);
+    var fragment = document.createDocumentFragment ();
     console.log(responseData);
 
-    let ul = document.createElement ('ul');
-    ul.classList.add ('ul-list')
+
     responseData.data.forEach (item => {
         let li = document.createElement ('li');
       
@@ -26,12 +30,15 @@ function render () {
 
         imgUser.src = item.avatar;
 
-        ul.appendChild (li);
+        fragment.appendChild(li);
         li.appendChild (imgUser);
         li.appendChild (pEmail);
     });
 
-    document.getElementById ('api-user-email').appendChild(ul);
+    document.getElementById ('ul-list').innerHTML = ' ';
+    document.getElementById ('ul-list').appendChild(fragment);
+
+    totalPages = responseData.total_pages;
     
 }
 
@@ -42,11 +49,24 @@ function errorRender () {
     document.getElementById ('api-user-email').appendChild(pError);
 }
 
-getUsers ();
+// getUsers ();
+getUsers (currentPage);
+
+
 document.getElementsById ('load-prev').addEventListener ('click', function () {
-    
+    if (currentPage == 1) {
+        return;
+    }
+    currentPage -=1;
+    getUsers (currentPage);
 })
 
 document.getElementsById ('load-next').addEventListener ('click', function () {
-    
+    if (currentPage == totalPages) {
+        return;
+    }
+    currentPage +=1;
+    getUsers (currentPage);
 })
+
+getUsers (currentPage);
