@@ -53,7 +53,7 @@ function errorRender () {
 getUsers (currentPage);
 
 
-document.getElementsById ('load-prev').addEventListener ('click', function () {
+document.getElementById('load-prev').addEventListener('click', function () {
     if (currentPage == 1) {
         return;
     }
@@ -61,7 +61,7 @@ document.getElementsById ('load-prev').addEventListener ('click', function () {
     getUsers (currentPage);
 })
 
-document.getElementsById ('load-next').addEventListener ('click', function () {
+document.getElementById('load-next').addEventListener('click', function () {
     if (currentPage == totalPages) {
         return;
     }
